@@ -1,0 +1,1 @@
+default['ssh']['user'] = 'vagrant'

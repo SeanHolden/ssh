@@ -2,19 +2,52 @@
 # Cookbook:: ssh
 # Spec:: default
 #
-# Copyright:: 2017, The Authors, All Rights Reserved.
+# Copyright:: 2017, Sean Holden, All Rights Reserved.
 
 require 'spec_helper'
 
 describe 'ssh::default' do
-  context 'When all attributes are default, on an unspecified platform' do
-    let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new
-      runner.converge(described_recipe)
-    end
+  context 'When all attributes are default, on Centos7' do
+    let(:platform) { 'centos' }
+    let(:version) { '7.2.1511' }
+    let(:chef_run) {
+      ChefSpec::SoloRunner.new(platform: platform, version: version).
+        converge(described_recipe)
+    }
 
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
+    end
+
+    describe 'directories' do
+      it 'creates .ssh directory' do
+        expect(chef_run).to create_directory('/home/vagrant/.ssh').
+          with(
+            owner: 'vagrant',
+            group: 'vagrant',
+            mode: '700'
+          )
+      end
+    end
+
+    describe 'templates' do
+      it 'creates id_rsa file' do
+        expect(chef_run).to create_template('/home/vagrant/.ssh/id_rsa').
+          with(
+            owner: 'vagrant',
+            group: 'vagrant',
+            mode: '600'
+          )
+      end
+
+      it 'creates id_rsa.pub file' do
+        expect(chef_run).to create_template('/home/vagrant/.ssh/id_rsa.pub').
+          with(
+            owner: 'vagrant',
+            group: 'vagrant',
+            mode: '644'
+          )
+      end
     end
   end
 end
