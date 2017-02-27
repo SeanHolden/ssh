@@ -2,17 +2,38 @@
 
 # Inspec test for recipe ssh::default
 
-# The Inspec reference, with examples and extensive documentation, can be
-# found at http://inspec.io/docs/reference/resources/
+describe directory('/home/vagrant/.ssh') do
+  it { should exist }
 
-unless os.windows?
-  describe user('root') do
-    it { should exist }
-    skip 'This is an example test, replace with your own test.'
-  end
+  it { should be_readable.by('owner') }
+  it { should be_writable.by('owner') }
+  it { should be_executable.by('owner') }
+
+  it { should_not be_readable.by('group') }
+  it { should_not be_writable.by('group') }
+  it { should_not be_executable.by('group') }
 end
 
-describe port(80) do
-  it { should_not be_listening }
-  skip 'This is an example test, replace with your own test.'
+describe file('/home/vagrant/.ssh/id_rsa') do
+  it { should exist }
+
+  it { should be_readable.by('owner') }
+  it { should be_writable.by('owner') }
+  it { should_not be_executable.by('owner') }
+
+  it { should_not be_readable.by('group') }
+  it { should_not be_writable.by('group') }
+  it { should_not be_executable.by('group') }
+end
+
+describe file('/home/vagrant/.ssh/id_rsa.pub') do
+  it { should exist }
+
+  it { should be_readable.by('owner') }
+  it { should be_writable.by('owner') }
+  it { should_not be_executable.by('owner') }
+
+  it { should be_readable.by('group') }
+  it { should_not be_writable.by('group') }
+  it { should_not be_executable.by('group') }
 end
