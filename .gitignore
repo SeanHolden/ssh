@@ -22,3 +22,4 @@ Policyfile.lock.json
 
 templates/default/id_rsa.erb
 templates/default/id_rsa.pub.erb
+templates/default/known_hosts.erb

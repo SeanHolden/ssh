@@ -23,3 +23,9 @@ template "/home/#{user}/.ssh/id_rsa.pub" do
   group user
   mode '644'
 end
+
+template "/home/#{user}/.ssh/known_hosts" do
+  owner user
+  group user
+  mode '600'
+end

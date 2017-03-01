@@ -48,6 +48,15 @@ describe 'ssh::default' do
             mode: '644'
           )
       end
+
+      it 'creates known_hosts file' do
+        expect(chef_run).to create_template('/home/vagrant/.ssh/known_hosts').
+          with(
+            owner: 'vagrant',
+            group: 'vagrant',
+            mode: '600'
+          )
+      end
     end
   end
 end
