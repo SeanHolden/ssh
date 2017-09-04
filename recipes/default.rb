@@ -4,28 +4,28 @@
 #
 # Copyright:: 2017, Sean Holden, All Rights Reserved.
 
-user = node['ssh']['user']
+_user = node['ssh']['user']
 
-directory "/home/#{user}/.ssh" do
-  owner user
-  group user
+directory "/home/#{_user}/.ssh" do
+  owner _user
+  group _user
   mode '700'
 end
 
-template "/home/#{user}/.ssh/id_rsa" do
-  owner user
-  group user
+template "/home/#{_user}/.ssh/id_rsa" do
+  owner _user
+  group _user
   mode '600'
 end
 
-template "/home/#{user}/.ssh/id_rsa.pub" do
-  owner user
-  group user
+template "/home/#{_user}/.ssh/id_rsa.pub" do
+  owner _user
+  group _user
   mode '644'
 end
 
-template "/home/#{user}/.ssh/known_hosts" do
-  owner user
-  group user
+template "/home/#{_user}/.ssh/known_hosts" do
+  owner _user
+  group _user
   mode '600'
 end
